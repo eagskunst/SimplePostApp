@@ -72,8 +72,72 @@ class PostsRemoteDataSourceTest {
         }
     }
 
-    private inline fun advanceTime(doAfterAdvance: () -> Unit) {
-        testScheduler.advanceTimeBy(PostsRemoteDataSource.DEFAULT_DELAY_TIME + 1, TimeUnit.SECONDS)
+    @Test
+    fun given_somePostsWith1InItsName_when_searchWith1AsWord_then_observableContainsOnlyPostWithThatWord() {
+        val posts = (1..10).map {
+            PostEntity(
+                name = it.toString().repeat(10),
+                description = "lorem ipsum",
+                added = true,
+            )
+        }
+        val observables = posts.map {
+            dataSource.addPost(it)
+        }
+        advanceTime(observables.size * PostsRemoteDataSource.DEFAULT_DELAY_TIME + 1) {
+            observables.forEach { it.test().dispose() }
+        }
+        dataSource.searchPosts("1").test()
+            .assertValue(
+                posts.filter { it.name.contains("1") || it.description.contains("1") },
+            )
+    }
+
+    @Test
+    fun given_somePostsWith1InItsDescription_when_searchWith1AsWord_then_observableContainsOnlyPostWithThatWord() {
+        val posts = (1..10).map {
+            PostEntity(
+                name = "lorem ipsum $it",
+                description = it.toString().repeat(10),
+                added = true,
+            )
+        }
+        val observables = posts.map {
+            dataSource.addPost(it)
+        }
+        advanceTime(observables.size * PostsRemoteDataSource.DEFAULT_DELAY_TIME + 1) {
+            observables.forEach { it.test().dispose() }
+        }
+        dataSource.searchPosts("1").test()
+            .assertValue(
+                posts.filter { it.name.contains("1") || it.description.contains("1") },
+            )
+    }
+
+    @Test
+    fun given_somePosts_when_searchWithEmptyInput_then_observableContainsAllPosts() {
+        val posts = (1..10).map {
+            PostEntity(
+                name = "lorem ipsum $it",
+                description = it.toString().repeat(10),
+                added = true,
+            )
+        }
+        val observables = posts.map {
+            dataSource.addPost(it)
+        }
+        advanceTime(observables.size * PostsRemoteDataSource.DEFAULT_DELAY_TIME + 1) {
+            observables.forEach { it.test().dispose() }
+        }
+        dataSource.searchPosts("").test()
+            .assertValue(dataSource.posts)
+    }
+
+    private inline fun advanceTime(
+        time: Long = PostsRemoteDataSource.DEFAULT_DELAY_TIME + 1,
+        doAfterAdvance: () -> Unit,
+    ) {
+        testScheduler.advanceTimeBy(time, TimeUnit.SECONDS)
         doAfterAdvance()
     }
 }

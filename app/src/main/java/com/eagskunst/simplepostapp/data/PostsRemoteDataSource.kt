@@ -46,4 +46,13 @@ class PostsRemoteDataSource constructor() {
         )
         return postsSubject.delay(DEFAULT_DELAY_TIME, TimeUnit.SECONDS)
     }
+
+    fun searchPosts(input: String): Observable<List<PostEntity>> {
+        if (input.isEmpty()) {
+            return postsSubject
+        }
+        return postsSubject.map { posts ->
+            posts.filter { post -> post.description.contains(input) || post.name.contains(input) }
+        }
+    }
 }
