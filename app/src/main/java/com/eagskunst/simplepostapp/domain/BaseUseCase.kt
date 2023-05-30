@@ -10,7 +10,7 @@ abstract class BaseUseCase<R : Any, Params>(
     private val backgroundScheduler: BackgroundScheduler,
     private val mainScheduler: MainScheduler,
 ) {
-    protected val disposable = CompositeDisposable()
+    protected val disposables = CompositeDisposable()
 
     abstract fun createObservable(
         params: Params?,
@@ -30,10 +30,10 @@ abstract class BaseUseCase<R : Any, Params>(
                 onNext = onSuccess,
                 onError = onError,
                 onComplete = { Timber.d("Completed use case ${this.javaClass.simpleName}") },
-            ).addTo(disposable)
+            ).addTo(disposables)
     }
 
     fun stop() {
-        disposable.clear()
+        disposables.clear()
     }
 }
