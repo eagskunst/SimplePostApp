@@ -1,6 +1,6 @@
 package com.eagskunst.simplepostapp.presentation
 
-import com.eagskunst.simplepostapp.domain.PostEntity
+import com.eagskunst.simplepostapp.domain.entity.PostEntity
 
 sealed class MainViewState {
     object Loading : MainViewState()

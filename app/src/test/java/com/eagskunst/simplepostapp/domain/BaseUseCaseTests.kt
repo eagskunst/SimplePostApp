@@ -1,5 +1,6 @@
 package com.eagskunst.simplepostapp.domain
 
+import com.eagskunst.simplepostapp.domain.usecase.BaseUseCase
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs

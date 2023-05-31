@@ -1,4 +1,4 @@
-package com.eagskunst.simplepostapp.domain
+package com.eagskunst.simplepostapp.domain.entity
 
 import java.util.UUID
 

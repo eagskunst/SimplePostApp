@@ -1,5 +1,7 @@
-package com.eagskunst.simplepostapp.domain
+package com.eagskunst.simplepostapp.domain.usecase
 
+import com.eagskunst.simplepostapp.domain.BackgroundScheduler
+import com.eagskunst.simplepostapp.domain.MainScheduler
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.addTo

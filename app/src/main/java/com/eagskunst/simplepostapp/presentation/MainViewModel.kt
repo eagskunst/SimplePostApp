@@ -3,11 +3,11 @@ package com.eagskunst.simplepostapp.presentation
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.eagskunst.simplepostapp.domain.AddPostUseCase
-import com.eagskunst.simplepostapp.domain.DeletePostUseCase
-import com.eagskunst.simplepostapp.domain.GetPostsUseCase
-import com.eagskunst.simplepostapp.domain.PostEntity
-import com.eagskunst.simplepostapp.domain.SearchPostsUseCase
+import com.eagskunst.simplepostapp.domain.entity.PostEntity
+import com.eagskunst.simplepostapp.domain.usecase.AddPostUseCase
+import com.eagskunst.simplepostapp.domain.usecase.DeletePostUseCase
+import com.eagskunst.simplepostapp.domain.usecase.GetPostsUseCase
+import com.eagskunst.simplepostapp.domain.usecase.SearchPostsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import timber.log.Timber
 import javax.inject.Inject

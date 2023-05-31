@@ -7,7 +7,7 @@ import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.eagskunst.simplepostapp.R
 import com.eagskunst.simplepostapp.databinding.ViewHolderPostBinding
-import com.eagskunst.simplepostapp.domain.PostEntity
+import com.eagskunst.simplepostapp.domain.entity.PostEntity
 
 @EpoxyModelClass
 abstract class PostView : EpoxyModelWithHolder<PostView.Holder>() {

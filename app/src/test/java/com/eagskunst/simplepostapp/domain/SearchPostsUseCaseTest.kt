@@ -1,6 +1,8 @@
 package com.eagskunst.simplepostapp.domain
 
 import com.eagskunst.simplepostapp.data.PostsRemoteDataSource
+import com.eagskunst.simplepostapp.domain.entity.PostEntity
+import com.eagskunst.simplepostapp.domain.usecase.SearchPostsUseCase
 import com.google.common.truth.Truth.assertThat
 import io.mockk.every
 import io.mockk.impl.annotations.MockK

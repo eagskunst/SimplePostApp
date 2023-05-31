@@ -1,7 +1,7 @@
 package com.eagskunst.simplepostapp.data
 
 import com.eagskunst.simplepostapp.commons.GenericException
-import com.eagskunst.simplepostapp.domain.PostEntity
+import com.eagskunst.simplepostapp.domain.entity.PostEntity
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.plugins.RxJavaPlugins
 import io.reactivex.rxjava3.schedulers.TestScheduler
