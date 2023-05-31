@@ -48,7 +48,7 @@ class PostsRemoteDataSource @Inject constructor() {
         Timber.d("Adding post $post")
         postsSubject.onNext(
             posts.apply {
-                add(post.copy(added = true))
+                add(0, post.copy(added = true))
             },
         )
         return postsSubject.delay(DEFAULT_DELAY_TIME, TimeUnit.SECONDS)

@@ -1,6 +1,5 @@
 # SimplePostApp
 An application to create, remove and filter posts.
-By swiping from top to bottom, you can restart to the initial posts
 
 ## Architecture
 This applications follows the MVVM + Clean Architecture with TDD.

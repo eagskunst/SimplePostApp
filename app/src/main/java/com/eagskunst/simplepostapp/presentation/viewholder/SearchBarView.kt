@@ -3,6 +3,7 @@ package com.eagskunst.simplepostapp.presentation.viewholder
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
+import androidx.core.widget.doAfterTextChanged
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyHolder
 import com.airbnb.epoxy.EpoxyModelClass
@@ -27,6 +28,11 @@ abstract class SearchBarView : EpoxyModelWithHolder<SearchBarView.Holder>() {
         super.bind(holder)
         with(holder.binding) {
             etSearch.setText(savedText, TextView.BufferType.EDITABLE)
+            etSearch.doAfterTextChanged { text ->
+                if (text.toString().isEmpty()) {
+                    onImeClick("")
+                }
+            }
             etSearch.setOnEditorActionListener { _, actionId, _ ->
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     onImeClick(etSearch.text.toString())
