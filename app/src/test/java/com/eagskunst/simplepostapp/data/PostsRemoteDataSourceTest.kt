@@ -89,28 +89,7 @@ class PostsRemoteDataSourceTest {
         }
         dataSource.searchPosts("1").test()
             .assertValue(
-                posts.filter { it.name.contains("1") || it.description.contains("1") },
-            )
-    }
-
-    @Test
-    fun given_somePostsWith1InItsDescription_when_searchWith1AsWord_then_observableContainsOnlyPostWithThatWord() {
-        val posts = (1..10).map {
-            PostEntity(
-                name = "lorem ipsum $it",
-                description = it.toString().repeat(10),
-                added = true,
-            )
-        }
-        val observables = posts.map {
-            dataSource.addPost(it)
-        }
-        advanceTime(observables.size * PostsRemoteDataSource.DEFAULT_DELAY_TIME + 1) {
-            observables.forEach { it.test().dispose() }
-        }
-        dataSource.searchPosts("1").test()
-            .assertValue(
-                posts.filter { it.name.contains("1") || it.description.contains("1") },
+                posts.filter { it.name.contains("1") },
             )
     }
 
@@ -118,8 +97,8 @@ class PostsRemoteDataSourceTest {
     fun given_somePosts_when_searchWithEmptyInput_then_observableContainsAllPosts() {
         val posts = (1..10).map {
             PostEntity(
-                name = "lorem ipsum $it",
-                description = it.toString().repeat(10),
+                name = it.toString().repeat(10),
+                description = "lorem ipsum",
                 added = true,
             )
         }

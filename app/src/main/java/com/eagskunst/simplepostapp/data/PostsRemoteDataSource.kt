@@ -6,8 +6,9 @@ import com.eagskunst.simplepostapp.domain.PostEntity
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
-class PostsRemoteDataSource constructor() {
+class PostsRemoteDataSource @Inject constructor() {
 
     companion object {
         const val GENERIC_ERROR_MSG = "Something wrong happened. Try again later"
@@ -52,7 +53,7 @@ class PostsRemoteDataSource constructor() {
             return postsSubject
         }
         return postsSubject.map { posts ->
-            posts.filter { post -> post.description.contains(input) || post.name.contains(input) }
+            posts.filter { post -> post.name.contains(input) }
         }
     }
 }

@@ -6,6 +6,11 @@ plugins {
     id 'kotlin-parcelize'
 }
 
+kapt {
+    correctErrorTypes true
+    useBuildCache true
+}
+
 android {
     namespace 'com.eagskunst.simplepostapp'
     compileSdk 33
@@ -36,10 +41,6 @@ android {
     viewBinding {
         enabled = true
     }
-//    kapt {
-//        correctErrorTypes true
-//        useBuildCache true
-//    }
 }
 
 dependencies {
@@ -49,6 +50,8 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.9.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.activity:activity-ktx:1.3.1'
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 
     // Hilt
     implementation "com.google.dagger:hilt-android:2.44"
@@ -59,9 +62,9 @@ dependencies {
     implementation 'io.reactivex.rxjava3:rxandroid:3.0.2'
 
     // Epoxy
-    def epoxyVersion = "5.1.3"
+    def epoxyVersion = "5.1.0"
     implementation "com.airbnb.android:epoxy:$epoxyVersion"
-    // kapt "com.airbnb.android:epoxy-processor:$epoxyVersion"
+    kapt "com.airbnb.android:epoxy-processor:$epoxyVersion"
 
     // Log
     implementation "com.jakewharton.timber:timber:5.0.1"
