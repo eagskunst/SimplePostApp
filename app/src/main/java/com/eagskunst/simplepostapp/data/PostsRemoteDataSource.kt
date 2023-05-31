@@ -5,9 +5,12 @@ import com.eagskunst.simplepostapp.commons.GenericException
 import com.eagskunst.simplepostapp.domain.PostEntity
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.subjects.BehaviorSubject
+import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class PostsRemoteDataSource @Inject constructor() {
 
     companion object {
@@ -17,8 +20,8 @@ class PostsRemoteDataSource @Inject constructor() {
 
     private var firstTime = true
     val posts = mutableListOf(
-        PostEntity("Hello World", "Lorem ipsum dolor sit"),
-        PostEntity("Hi", "This is the first post"),
+        PostEntity("Hello World", "Lorem ipsum dolor sit", added = true),
+        PostEntity("Hi", "This is the first post", added = true),
     )
         @VisibleForTesting get
     private val postsSubject = BehaviorSubject.create<List<PostEntity>>()
@@ -36,11 +39,13 @@ class PostsRemoteDataSource @Inject constructor() {
     }
 
     fun removePost(post: PostEntity): Observable<List<PostEntity>> {
+        Timber.d("Removing post $post")
         postsSubject.onNext(posts.apply { remove(post) })
         return postsSubject.delay(DEFAULT_DELAY_TIME, TimeUnit.SECONDS)
     }
 
     fun addPost(post: PostEntity): Observable<List<PostEntity>> {
+        Timber.d("Adding post $post")
         postsSubject.onNext(
             posts.apply {
                 add(post.copy(added = true))
@@ -50,10 +55,11 @@ class PostsRemoteDataSource @Inject constructor() {
     }
 
     fun searchPosts(input: String): Observable<List<PostEntity>> {
+        Timber.d("Searching posts with [$input]")
         val filteredPosts = if (input.isEmpty()) {
             posts
         } else {
-            posts.filter { post -> post.name.contains(input) }
+            posts.filter { post -> post.name.contains(input, ignoreCase = true) }
         }
         postsSubject.onNext(filteredPosts)
         return postsSubject

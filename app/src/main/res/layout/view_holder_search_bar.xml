@@ -9,11 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="10dp"
-        app:endIconDrawable="@drawable/baseline_cancel_24"
-        app:endIconMode="clear_text"
-        app:endIconScaleType="centerCrop"
-        app:endIconTint="@android:color/darker_gray">
+        android:layout_marginTop="10dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etSearch"

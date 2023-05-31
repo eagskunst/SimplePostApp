@@ -25,9 +25,8 @@ class MainActivity : AppCompatActivity() {
         searchText = savedInstanceState?.getString(SEARCH_TEXT_KEY, "") ?: ""
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.srMain.setOnRefreshListener { viewModel.getPosts() }
+        setViewListeners()
         viewModel.viewState.observe(this) { state ->
-            binding.srMain.isRefreshing = state == MainViewState.Loading
             handleNewState(state)
         }
     }
@@ -37,9 +36,20 @@ class MainActivity : AppCompatActivity() {
         super.onSaveInstanceState(outState)
     }
 
+    private fun setViewListeners() {
+        with(binding) {
+            srMain.setOnRefreshListener { viewModel.getPosts() }
+            fabAddPost.setOnClickListener {
+                NewPostFormBottomSheetFragment.show(this@MainActivity)
+            }
+        }
+    }
+
     private fun handleNewState(
         state: MainViewState,
     ) {
+        binding.srMain.isRefreshing = state is MainViewState.Loading
+        binding.fabAddPost.isEnabled = state is MainViewState.Posts
         when (state) {
             is MainViewState.GeneralError -> {
                 Snackbar.make(binding.root, state.message, Snackbar.LENGTH_SHORT).show()
