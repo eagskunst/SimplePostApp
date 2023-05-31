@@ -25,13 +25,14 @@ class PostsRemoteDataSource @Inject constructor() {
 
     fun getPosts(): Observable<List<PostEntity>> {
         // Simulates API Call
-        val observable = if (firstTime) {
+        if (firstTime) {
             firstTime = false
-            Observable.error(GenericException(GENERIC_ERROR_MSG))
-        } else {
-            Observable.just(posts)
+            return Observable.error<List<PostEntity>>(GenericException(GENERIC_ERROR_MSG))
+                .delay(DEFAULT_DELAY_TIME, TimeUnit.SECONDS)
         }
-        return postsSubject.ambWith(observable).delay(DEFAULT_DELAY_TIME, TimeUnit.SECONDS)
+
+        postsSubject.onNext(posts)
+        return postsSubject.delay(DEFAULT_DELAY_TIME, TimeUnit.SECONDS)
     }
 
     fun removePost(post: PostEntity): Observable<List<PostEntity>> {
@@ -49,11 +50,12 @@ class PostsRemoteDataSource @Inject constructor() {
     }
 
     fun searchPosts(input: String): Observable<List<PostEntity>> {
-        if (input.isEmpty()) {
-            return postsSubject
-        }
-        return postsSubject.map { posts ->
+        val filteredPosts = if (input.isEmpty()) {
+            posts
+        } else {
             posts.filter { post -> post.name.contains(input) }
         }
+        postsSubject.onNext(filteredPosts)
+        return postsSubject
     }
 }
