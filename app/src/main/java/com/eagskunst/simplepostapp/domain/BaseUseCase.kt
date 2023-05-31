@@ -23,6 +23,7 @@ abstract class BaseUseCase<R : Any, Params>(
         onSuccess: (R) -> Unit,
         onError: (Throwable?) -> Unit,
     ) {
+        Timber.d("Create observable of ${this.javaClass.simpleName}")
         createObservable(params, onSuccess, onError)
             .subscribeOn(backgroundScheduler.getScheduler())
             .observeOn(mainScheduler.getScheduler())
